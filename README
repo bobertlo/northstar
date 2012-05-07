@@ -1,0 +1,16 @@
+Northstar linux is an experimental linux distribution based on sabotage[1]
+linux. Using musl[2] libc, northstar build an entire userspace statically,
+simplifying many aspects of the system.
+
+The package system is based on Slackware[3]'s SlackBuild scripts and
+driven by mk and utility scripts.
+
+Bootstrap instructions:
+$ cp dist/bootstrap.config config
+$ . config
+$ mk install-bootstrap
+
+[1] http://github.com/chneukirchen/sabotage
+    http://github.com/rofl0r/sabotage
+[2] http://www.etalabs.net/musl
+[3] http://www.slackware.com/

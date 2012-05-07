@@ -13,6 +13,7 @@ for set in bootstrap; do
     echo install-$set:V: install-$pkg
     echo $pkg:V: $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz
     echo $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz:
+    echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
     echo install-$pkg:V: $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD
     echo $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD: $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz
@@ -32,6 +33,7 @@ for set in bootstrap; do
       done
       echo
     fi
+
     echo
   done
 done
