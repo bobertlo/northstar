@@ -31,5 +31,8 @@ CC="$BS/bin/musl-gcc" ./configure --prefix="$BS" \
 make -j$MAKE_THREADS
 make DESTDIR=$PKG install
 
+rm -f $PKG/$BS/lib/libbfd.la
+rm -f $PKG/$BS/lib/libopcodes.la
+
 cd $PKG
 tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*

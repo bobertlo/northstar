@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+TMP=${TMP:-/tmp}
+OUTPUT=${OUTPUT:-$TMP}
+
+for set in bootstrap; do
+  for dir in $set/*; do
+    pkg=$( basename $dir )
+    . $dir/$pkg.info
+    # generate recipe
+    echo "#### $pkg"
+    echo $set:V: $pkg
+    echo install-$set:V: install-$pkg
+    echo $pkg:V: $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz
+    echo $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz:
+    echo "  build-pkg $dir/$pkg.build"
+    echo install-$pkg:V: $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD
+    echo $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD:
+    echo "  tar xvf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz > $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD"
+    if [ ! -z "$MAKEDEPENDS" ]; then
+      echo -n $pkg:V:
+      for dep in $MAKEDEPENDS; do
+         echo -n " install-$dep"
+      done
+      echo
+    fi
+    if [ ! -z "$DEPENDS" ]; then
+      echo -n install-$pkg:V:
+      for dep in $DEPENDS; do
+         echo -n " install-$dep"
+      done
+      echo
+    fi
+    echo
+  done
+done
