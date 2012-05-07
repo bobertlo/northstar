@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+. $1
+cd $( dirname $1 )
+
+DIST_DIR=${DIST_DIR:-$( pwd )}
+
+for d in $DOWNLOAD; do
+  rm -f "$DIST_DIR/$( basename "$d" )"
+done

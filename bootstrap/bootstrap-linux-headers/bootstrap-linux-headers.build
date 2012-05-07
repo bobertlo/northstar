@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+# build script for bootstrap-musl
+
+PRGNAME=bootstrap-linux-headers
+VERSION=${VERSION:-3.2.16}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf linux-$VERSION
+tar xvf $DIST_DIR/linux-$VERSION.tar.bz2
+cd linux-$VERSION
+
+patch -Np1 < $CWD/linux-noperl-headers.patch
+patch -Np1 < $CWD/linux-ubi.patch
+
+make mrproper
+make INSTALL_HDR_PATH=$PKG/$BS ARCH=$ARCH HOSTCFLAGS=-D_GNU_SOURCE headers_install
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

@@ -1,0 +1,7 @@
+PRGNAME="bootstrap-musl"
+VERSION="0.9.0"
+BUILD=1
+HOMEPAGE="http://www.etalabs.net/musl/"
+DOWNLOAD="http://www.etalabs.net/musl/releases/musl-0.9.0.tar.gz"
+DEPENDS=""
+MAKEDEPENDS="bootstrap-gcc"

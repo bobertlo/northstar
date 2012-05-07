@@ -1,0 +1,35 @@
+#!/bin/sh -e
+
+# build script for bootstrap-musl
+
+PRGNAME=bootstrap-musl
+VERSION=${VERSION:-0.9.0}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf musl-$VERSION
+tar xvf $DIST_DIR/musl-$VERSION.tar.gz
+cd musl-$VERSION
+
+./configure --prefix=/tmp/bootstrap --syslibdir=/tmp/bootstrap/lib \
+    --disable-shared 
+
+make -j$MAKE_THREADS
+make DESTDIR=$PKG install
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

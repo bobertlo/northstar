@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+if [ -z "$1" ]; then
+  echo "usage: build-pkg <package.build>"
+  exit 1
+fi
+
+cd $( dirname "$1" )
+./$( basename "$1" )
+

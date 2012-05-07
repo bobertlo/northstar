@@ -1,0 +1,7 @@
+PRGNAME="bootstrap-binutils"
+VERSION="2.22"
+BUILD=1
+HOMEPAGE="http://www.gnu.org/software/binutils/"
+DOWNLOAD="http://ftp.gnu.org/gnu/binutils/binutils-2.22.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS="bootstrap-gcc bootstrap-musl"

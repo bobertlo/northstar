@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+PRGNAME=bootstrap-gcc
+VERSION=${VERSION:-3.4.6}
+BUILD=${BUILD:-1}
+BS=${BS:-/tmp/bootstrap}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-/tmp}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf gcc-$VERSION
+
+tar xvf $DIST_DIR/gcc-core-$VERSION.tar.bz2
+cd gcc-$VERSION
+
+sed -i 's@\./fixinc.sh@-c true@' gcc/Makefile.in
+
+./configure --prefix="$BS" --disable-bootstrap \
+    --disable-shared --disable-multilib --disable-nls
+
+make -j$MAKE_THREADS all-gcc
+make DESTDIR=$PKG install-gcc
+
+cd $PKG
+tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*

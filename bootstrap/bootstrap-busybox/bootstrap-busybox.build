@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+PRGNAME=bootstrap-busybox
+VERSION=${VERSION:-1.19.2}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+BS=${BS:-/tmp/bootstrap}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf busybox-$VERSION
+tar xvf $DIST_DIR/busybox-$VERSION.tar.bz2
+cd busybox-$VERSION
+
+cp $CWD/busybox.config .config
+patch -p1 < $CWD/busybox.patch
+
+make HOSTCC=gcc CC=$BS/bin/musl-gcc -j$MAKE_THREADS
+
+mkdir -p $PKG/$BS/bin
+cp busybox $PKG/$BS/bin
+cd $PKG/$BS/bin
+for f in $( ./busybox --list ); do
+  [ -e $f ] || ln -sf busybox $f
+done
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

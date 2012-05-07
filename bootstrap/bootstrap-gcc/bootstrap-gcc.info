@@ -1,0 +1,7 @@
+PRGNAME="bootstrap-gcc"
+VERSION="3.4.6"
+BUILD=1
+HOMEPAGE="http://www.gnu.org/software/gcc/"
+DOWNLOAD="http://ftp.gnu.org/gnu/gcc/gcc-3.4.6/gcc-core-3.4.6.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS=""

@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+. $1
+cd $( dirname $1 )
+DIST_DIR=${DIST_DIR:-$( pwd )}
+
+for d in $DOWNLOAD; do
+  fname=$( basename "$d" )
+  if [ -e "$DIST_DIR/$fname" ]; then
+    echo "found $fname"
+  else
+    mkdir -p "$DIST_DIR"
+    wget -O "$DIST_DIR/$fname" $d
+  fi
+done

@@ -1,0 +1,15 @@
+diff -aur linux-3.0.old/include/mtd/ubi-user.h linux-3.0.new/include/mtd/ubi-user.h
+--- linux-3.0.old/include/mtd/ubi-user.h
++++ linux-3.0.new/include/mtd/ubi-user.h
+@@ -22,7 +22,9 @@
+ #define __UBI_USER_H__
+ 
+ #include <linux/types.h>
+-
++#ifndef __packed
++#define __packed __attribute__((packed))
++#endif
+ /*
+  * UBI device creation (the same as MTD device attachment)
+  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
