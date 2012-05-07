@@ -31,7 +31,7 @@ sed -i 's@\./fixinc.sh@-c true@' gcc/Makefile.in
 ./configure --prefix="$BS" --disable-bootstrap \
     --disable-shared --disable-multilib --disable-nls
 
-make -j$MAKE_THREADS all-gcc
+make LDFLAGS="-static" -j$MAKE_THREADS all-gcc
 make DESTDIR=$PKG install-gcc
 
 cd $PKG
