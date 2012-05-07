@@ -15,10 +15,11 @@ for set in bootstrap; do
     echo $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz:
     echo "  build-pkg $dir/$pkg.build"
     echo install-$pkg:V: $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD
-    echo $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD:
-    echo "  tar xvf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz > $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD"
+    echo $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD: $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz
+    echo "  mkdir -p $BS/var/log/packages"
+    echo "  tar xvf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz -C / > $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD"
     if [ ! -z "$MAKEDEPENDS" ]; then
-      echo -n $pkg:V:
+      echo -n $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz:
       for dep in $MAKEDEPENDS; do
          echo -n " install-$dep"
       done
