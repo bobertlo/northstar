@@ -1,0 +1,7 @@
+PRGNAME="bootstrap-mk"
+VERSION="6"
+BUILD=1
+HOMEPAGE="http://tools.suckless.org/9base"
+DOWNLOAD="http://dl.suckless.org/tools/9base-6.tar.gz"
+DEPENDS=""
+MAKEDEPENDS="bootstrap-gcc bootstrap-musl bootstrap-binutils bootstrap-linux-headers"

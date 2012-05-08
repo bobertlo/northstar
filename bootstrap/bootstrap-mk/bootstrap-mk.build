@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+PRGNAME=bootstrap-mk
+VERSION=${VERSION:-6}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+BS=${BS:-/tmp/bootstrap}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf 9base-$VERSION
+tar xvf $DIST_DIR/9base-$VERSION.tar.gz
+cd 9base-$VERSION
+
+echo CC="/$BS/bin/musl-gcc -static -D_GNU_SOURCE -DPLAN9PORT" >> config.mk
+echo PREFIX="$BS" >> config.mk
+sed -i 's/__linux__/__not_linux__/;s/__sun__/__linux__/' lib9/dirread.c
+sed -i '/sys.termios.h/d' lib9/readcons.c
+
+make -j$MAKE_THREADS -C lib9
+make -j$MAKE_THREADS -C mk
+
+make -C mk DESTDIR=$PKG install
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*
