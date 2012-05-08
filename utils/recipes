@@ -15,6 +15,9 @@ for set in bootstrap; do
     echo $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz:
     echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
+    echo rebuild-$pkg:V:
+    echo "  fetch-dist $dir/$pkg.info"
+    echo "  build-pkg $dir/$pkg.build"
     echo install-$pkg:V: $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD
     echo $BS/var/log/packages/$PRGNAME-$VERSION-$ARCH-$BUILD: $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz
     echo "  mkdir -p $BS/var/log/packages"

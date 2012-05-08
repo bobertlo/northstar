@@ -1,6 +1,6 @@
-diff -aur busybox-1.19.2.orig//include/libbb.h busybox-1.19.2//include/libbb.h
---- busybox-1.19.2.orig//include/libbb.h	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//include/libbb.h	2011-09-16 01:13:21.000000000 +0000
+diff -aur busybox-1.19.2.orig/include/libbb.h busybox-1.19.2/include/libbb.h
+--- busybox-1.19.2.orig/include/libbb.h	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/include/libbb.h	2011-09-16 01:13:21.000000000 +0000
 @@ -37,6 +37,7 @@
  #include <sys/mman.h>
  #include <sys/socket.h>
@@ -9,10 +9,10 @@ diff -aur busybox-1.19.2.orig//include/libbb.h busybox-1.19.2//include/libbb.h
  #include <sys/time.h>
  #include <sys/types.h>
  #ifndef major
-Only in busybox-1.19.2//include: libbb.h.orig
-diff -aur busybox-1.19.2.orig//include/platform.h busybox-1.19.2//include/platform.h
---- busybox-1.19.2.orig//include/platform.h	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//include/platform.h	2011-09-16 01:13:21.000000000 +0000
+Only in busybox-1.19.2/include: libbb.h.orig
+diff -aur busybox-1.19.2.orig/include/platform.h busybox-1.19.2/include/platform.h
+--- busybox-1.19.2.orig/include/platform.h	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/include/platform.h	2011-09-16 01:13:21.000000000 +0000
 @@ -443,6 +443,13 @@
  # undef HAVE_NET_ETHERNET_H
  #endif
@@ -27,10 +27,10 @@ diff -aur busybox-1.19.2.orig//include/platform.h busybox-1.19.2//include/platfo
  /*
   * Now, define prototypes for all the functions defined in platform.c
   * These must come after all the HAVE_* macros are defined (or not)
-Only in busybox-1.19.2//include: platform.h.orig
-diff -aur busybox-1.19.2.orig//miscutils/man.c busybox-1.19.2//miscutils/man.c
---- busybox-1.19.2.orig//miscutils/man.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//miscutils/man.c	2011-09-16 01:13:21.000000000 +0000
+Only in busybox-1.19.2/include: platform.h.orig
+diff -aur busybox-1.19.2.orig/miscutils/man.c busybox-1.19.2/miscutils/man.c
+--- busybox-1.19.2.orig/miscutils/man.c	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/miscutils/man.c	2011-09-16 01:13:21.000000000 +0000
 @@ -116,7 +116,7 @@
  	/* "2>&1" is added so that nroff errors are shown in pager too.
  	 * Otherwise it may show just empty screen */
@@ -40,10 +40,10 @@ diff -aur busybox-1.19.2.orig//miscutils/man.c busybox-1.19.2//miscutils/man.c
  		    : "%s",
  		pager);
  	system(cmd);
-Only in busybox-1.19.2//miscutils: man.c.orig
-diff -aur busybox-1.19.2.orig//networking/ifconfig.c busybox-1.19.2//networking/ifconfig.c
---- busybox-1.19.2.orig//networking/ifconfig.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//networking/ifconfig.c	2011-09-16 01:13:21.000000000 +0000
+Only in busybox-1.19.2/miscutils: man.c.orig
+diff -aur busybox-1.19.2.orig/networking/ifconfig.c busybox-1.19.2/networking/ifconfig.c
+--- busybox-1.19.2.orig/networking/ifconfig.c	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/networking/ifconfig.c	2011-09-16 01:13:21.000000000 +0000
 @@ -56,7 +56,7 @@
  #endif
  
@@ -53,10 +53,10 @@ diff -aur busybox-1.19.2.orig//networking/ifconfig.c busybox-1.19.2//networking/
  #endif
  
  /* I don't know if this is needed for busybox or not.  Anyone? */
-Only in busybox-1.19.2//networking: ifconfig.c.orig
-diff -aur busybox-1.19.2.orig//networking/libiproute/iplink.c busybox-1.19.2//networking/libiproute/iplink.c
---- busybox-1.19.2.orig//networking/libiproute/iplink.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//networking/libiproute/iplink.c	2011-09-16 01:13:21.000000000 +0000
+Only in busybox-1.19.2/networking: ifconfig.c.orig
+diff -aur busybox-1.19.2.orig/networking/libiproute/iplink.c busybox-1.19.2/networking/libiproute/iplink.c
+--- busybox-1.19.2.orig/networking/libiproute/iplink.c	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/networking/libiproute/iplink.c	2011-09-16 01:13:21.000000000 +0000
 @@ -5,7 +5,6 @@
   * Licensed under GPLv2 or later, see file LICENSE in this source tree.
   */
@@ -65,10 +65,10 @@ diff -aur busybox-1.19.2.orig//networking/libiproute/iplink.c busybox-1.19.2//ne
  #include <netpacket/packet.h>
  #include <netinet/if_ether.h>
  
-Only in busybox-1.19.2//networking/libiproute: iplink.c.orig
-diff -aur busybox-1.19.2.orig//networking/tcpudp.c busybox-1.19.2//networking/tcpudp.c
---- busybox-1.19.2.orig//networking/tcpudp.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//networking/tcpudp.c	2011-09-16 01:13:21.000000000 +0000
+Only in busybox-1.19.2/networking/libiproute: iplink.c.orig
+diff -aur busybox-1.19.2.orig/networking/tcpudp.c busybox-1.19.2/networking/tcpudp.c
+--- busybox-1.19.2.orig/networking/tcpudp.c	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/networking/tcpudp.c	2011-09-16 01:13:21.000000000 +0000
 @@ -71,7 +71,7 @@
  /* Wants <limits.h> etc, thus included after libbb.h: */
  #ifdef __linux__
@@ -78,9 +78,9 @@ diff -aur busybox-1.19.2.orig//networking/tcpudp.c busybox-1.19.2//networking/tc
  #endif
  
  // TODO: move into this file:
-diff -aur busybox-1.19.2.orig//util-linux/fdisk.c busybox-1.19.2//util-linux/fdisk.c
---- busybox-1.19.2.orig//util-linux/fdisk.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//util-linux/fdisk.c	2011-09-16 01:13:21.000000000 +0000
+diff -aur busybox-1.19.2.orig/util-linux/fdisk.c busybox-1.19.2/util-linux/fdisk.c
+--- busybox-1.19.2.orig/util-linux/fdisk.c	2011-09-16 01:12:38.000000000 +0000
++++ busybox-1.19.2/util-linux/fdisk.c	2011-09-16 01:13:21.000000000 +0000
 @@ -550,7 +550,7 @@
  {
  #if ENABLE_FDISK_SUPPORT_LARGE_DISKS
@@ -90,4 +90,4 @@ diff -aur busybox-1.19.2.orig//util-linux/fdisk.c busybox-1.19.2//util-linux/fdi
  		fdisk_fatal(unable_to_seek);
  #else
  	uint64_t off = (uint64_t)secno * sector_size;
-Only in busybox-1.19.2//util-linux: fdisk.c.orig
+Only in busybox-1.19.2/util-linux: fdisk.c.orig

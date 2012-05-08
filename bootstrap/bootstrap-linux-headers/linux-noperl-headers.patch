@@ -1,6 +1,6 @@
 diff -urN linux-3.2.16/scripts/Makefile.headersinst linux-3.2.16-patched//scripts/Makefile.headersinst
 --- linux-3.2.16/scripts/Makefile.headersinst	2012-04-22 17:31:32.000000000 -0500
-+++ linux-3.2.16-patched//scripts/Makefile.headersinst	2012-05-07 00:08:39.850161913 -0500
++++ linux-3.2.16-patched/scripts/Makefile.headersinst	2012-05-07 00:08:39.850161913 -0500
 @@ -50,8 +50,8 @@
  quiet_cmd_install = INSTALL $(printdir) ($(words $(all-files))\
                              file$(if $(word 2, $(all-files)),s))
@@ -23,7 +23,7 @@ diff -urN linux-3.2.16/scripts/Makefile.headersinst linux-3.2.16-patched//script
  	$(call if_changed,install)
 diff -urN linux-3.2.16/scripts/headers_install.pl linux-3.2.16-patched//scripts/headers_install.pl
 --- linux-3.2.16/scripts/headers_install.pl	2012-04-22 17:31:32.000000000 -0500
-+++ linux-3.2.16-patched//scripts/headers_install.pl	1969-12-31 18:00:00.000000000 -0600
++++ linux-3.2.16-patched/scripts/headers_install.pl	1969-12-31 18:00:00.000000000 -0600
 @@ -1,58 +0,0 @@
 -#!/usr/bin/perl -w
 -#
@@ -85,7 +85,7 @@ diff -urN linux-3.2.16/scripts/headers_install.pl linux-3.2.16-patched//scripts/
 -exit 0;
 diff -urN linux-3.2.16/scripts/headers_install.sh linux-3.2.16-patched//scripts/headers_install.sh
 --- linux-3.2.16/scripts/headers_install.sh	1969-12-31 18:00:00.000000000 -0600
-+++ linux-3.2.16-patched//scripts/headers_install.sh	2012-05-07 00:08:39.849161563 -0500
++++ linux-3.2.16-patched/scripts/headers_install.sh	2012-05-07 00:08:39.849161563 -0500
 @@ -0,0 +1,42 @@
 +#!/bin/sh
 +

@@ -1,7 +1,0 @@
-PRGNAME="bootstrap-patch"
-VERSION="2.6.1"
-BUILD=1
-HOMEPAGE="http://savannah.gnu.org/projects/patch/"
-DOWNLOAD="ftp://ftp.gnu.org/gnu/patch/patch-2.6.1.tar.gz"
-DEPENDS=""
-MAKEDEPENDS="bootstrap-gcc bootstrap-musl bootstrap-binutils"
