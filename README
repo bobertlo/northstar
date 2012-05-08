@@ -8,6 +8,13 @@ $ vi config
 $ . config
 $ mk install-bootstrap
 
+Creating a chroot: (bootstrap required)
+$ utils/prepare-chroot
+$ utils/mount-chroot
+$ utils/enter-chroot
+ ...
+$ utils/umount-chroot
+
 [1] http://github.com/chneukirchen/sabotage
     http://github.com/rofl0r/sabotage
 [2] http://www.etalabs.net/musl

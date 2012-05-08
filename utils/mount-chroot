@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+if [ ! "$BS" -o ! "$NS_ROOT" ]; then
+  echo "BS and NS_ROOT variables are required. run . ./config"
+fi
+
+uid="$(id -u)"
+if [ "$uid" != "0" ]; then
+  printf -- "su needed. please enter password.\n"
+  su -c "$0 $1"
+  exit $?
+fi
+
+cd "$NS_ROOT"
+mkdir -p dev proc "./$BS"
+
+mount --rbind /dev "$NS_ROOT/dev"
+mount --rbind /proc "$NS_ROOT/proc"
+mount --bind "$BS" "$NS_ROOT/$BS"
+mount -o remount,ro "$NS_ROOT/$BS"

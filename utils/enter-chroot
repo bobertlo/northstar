@@ -1,0 +1,11 @@
+#!/bin/sh
+
+uid="$(id -u)"
+if [ "$uid" != "0" ]; then
+  echo "su needed, please enter password."
+  su -c "$0 $1"
+  exit $?
+fi
+
+chroot "$NS_ROOT" $BS/bin/env -i PATH=/local/bin:/bin:/devel/bin:$BS/bin\
+    HOME=/root TERM="$TERM" PS1='\u:\w$ ' $BS/bin/sh --login

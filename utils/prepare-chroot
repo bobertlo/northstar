@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+if [ ! "$BS" -o ! "$NS_ROOT" ]; then
+  echo "BS and NS_ROOT *must* be set, run . ./config"
+  exit 1
+fi
+
+mkdir -p "$NS_ROOT"
+cd "$NS_ROOT"
+mkdir -p bin dev etc proc src sys tmp "./$BS"
+cp /etc/resolv.conf "$NS_ROOT/etc/resolv.conf"
+ln -s /proc/mounts etc/mtab
+chmod 1777 tmp
+[ -e "$NS_ROOT/bin/sh" ] || ln -s "$BS/bin/busybox" "$NS_ROOT/bin/sh"
