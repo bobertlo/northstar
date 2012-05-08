@@ -1,0 +1,11 @@
+diff -ur busybox-1.19.2.orig//editors/patch.c busybox-1.19.2/editors/patch.c
+--- busybox-1.19.2.orig//editors/patch.c	2011-09-05 21:14:46.000000000 -0500
++++ busybox-1.19.2/editors/patch.c	2012-05-08 17:16:33.066000003 -0500
+@@ -484,6 +484,7 @@
+ 				for (i=0, s = name; *s;) {
+ 					if ((option_mask32 & FLAG_PATHLEN) && TT.prefix == i) break;
+ 					if (*(s++)=='/') {
++						while(*s=='/') s++;
+ 						name = s;
+ 						i++;
+ 					}

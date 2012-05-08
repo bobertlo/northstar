@@ -27,6 +27,7 @@ cd busybox-$VERSION
 
 cp $CWD/busybox.config .config
 patch -p1 < $CWD/busybox.patch
+patch -p1 < $CWD/busybox-patch.patch
 
 make HOSTCC=gcc CC=$BS/bin/musl-gcc -j$MAKE_THREADS
 
