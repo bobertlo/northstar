@@ -1,0 +1,33 @@
+#!/bin/sh -e
+
+PRGNAME=bootstrap-make
+VERSION=${VERSION:-3.82}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+BS=${BS:-/tmp/bootstrap}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf make-$VERSION
+tar xvf $DIST_DIR/make-$VERSION.tar.bz2
+cd make-$VERSION
+
+CC="$BS/bin/musl-gcc" ./configure --prefix="$BS" --disable-nls
+make -j$MAKE_THREADS CC="$BS/bin/musl-gcc" CFLAGS=-D__BEOS__
+make DESTDIR=$PKG install
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*
