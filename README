@@ -4,6 +4,7 @@ C standard library.
 
 Bootstrap instructions:
 $ cp dist/bootstrap.config config
+$ vi config
 $ . config
 $ mk install-bootstrap
 
