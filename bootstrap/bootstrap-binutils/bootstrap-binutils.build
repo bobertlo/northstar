@@ -34,5 +34,12 @@ make DESTDIR=$PKG install
 rm -f $PKG/$BS/lib/libbfd.la
 rm -f $PKG/$BS/lib/libopcodes.la
 
+rm -rf $PKG/$BS/share
+
+if [ "$ARCH" = x86_64 ]; then
+  mv $PKG/$BS/lib64/* $PKG/$BS/lib
+  rmdir $PKG/$BS/lib64
+fi
+
 cd $PKG
 tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*

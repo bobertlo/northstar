@@ -35,5 +35,7 @@ make -j$MAKE_THREADS -C mk
 
 make -C mk DESTDIR=$PKG install
 
+rm -rf "$PKG/$BS/share"
+
 cd $PKG
 tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

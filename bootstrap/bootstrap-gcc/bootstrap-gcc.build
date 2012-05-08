@@ -29,10 +29,12 @@ cd gcc-$VERSION
 sed -i 's@\./fixinc.sh@-c true@' gcc/Makefile.in
 
 CFLAGS="-D_GNU_SOURCE" ./configure --prefix="$BS" --disable-bootstrap \
+    --libexecdir="$BS/lib" --libdir="$BS/lib" \
     --disable-shared --disable-multilib --disable-nls
 
 make LDFLAGS="-static" -j$MAKE_THREADS all-gcc
 make DESTDIR=$PKG install-gcc
+rm -r $PKG/$BS/info $PKG/$BS/man
 
 cd $PKG
 tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*
