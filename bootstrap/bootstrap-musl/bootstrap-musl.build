@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-# build script for bootstrap-musl
-
 PRGNAME=bootstrap-musl
 VERSION=${VERSION:-0.9.0}
 BUILD=${BUILD:-1}

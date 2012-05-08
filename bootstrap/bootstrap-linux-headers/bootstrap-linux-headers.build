@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-# build script for bootstrap-musl
-
 PRGNAME=bootstrap-linux-headers
 VERSION=${VERSION:-3.2.16}
 BUILD=${BUILD:-1}
