@@ -1,22 +1,37 @@
 Northstar linux is an experimental linux distribution based on sabotage[1]
-linux. Northstar builds its entire userspace statically using the musl[2]
-C standard library.
+linux. Northstar builds its entire userspace statically using the musl[2] C 
+standard library.
 
+=== BUILDING NORTHSTAR LINUX ===
 
-=== Bootstrap instructions: ===
+To build northstar linux on a foreign linux system, you must first create a
+bootstrap toolchain and then a chroot environment. 
+
+=== BUILDING A BOOTSTRAP ENVIRONMENT ===
+
+The bootstrap toolchain is built statically and installed to the prefix $BS
+(default: /tmp/bootstrap) which is then mounted read-only at the same point 
+inside the chroot.
+
+--- Bootstrap instructions: -----
 $ cp dist/bootstrap.config config
 $ vi config
 $ . config
 $ mk install-bootstrap
+---------------------------------
 
+At this point there should be toolchain capable of building northstar proper 
+inside a chroot. The next step is to prepare the chroot environment and enter 
+it.
 
-=== Creating a chroot: ===
+--- Entering the chroot: --------
 $ utils/prepare-chroot
 $ utils/mount-chroot
- ... (copy source tree or something?)
+ ... (probably copy in a source tree or something?)
 $ utils/enter-chroot
- ... (when you're done)
+ ... (then when you're done)
 $ utils/umount-chroot
+---------------------------------
 
 [1] http://github.com/chneukirchen/sabotage
     http://github.com/rofl0r/sabotage

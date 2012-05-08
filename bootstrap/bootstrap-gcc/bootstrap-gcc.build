@@ -28,7 +28,7 @@ cd gcc-$VERSION
 
 sed -i 's@\./fixinc.sh@-c true@' gcc/Makefile.in
 
-./configure --prefix="$BS" --disable-bootstrap \
+CFLAGS="-D_GNU_SOURCE" ./configure --prefix="$BS" --disable-bootstrap \
     --disable-shared --disable-multilib --disable-nls
 
 make LDFLAGS="-static" -j$MAKE_THREADS all-gcc

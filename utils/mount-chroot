@@ -2,6 +2,7 @@
 
 if [ ! "$BS" -o ! "$NS_ROOT" ]; then
   echo "BS and NS_ROOT variables are required. run . ./config"
+  exit 1
 fi
 
 uid="$(id -u)"
