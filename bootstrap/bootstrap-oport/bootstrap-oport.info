@@ -1,0 +1,7 @@
+PRGNAME="bootstrap-oport"
+VERSION="20120509"
+BUILD=1
+HOMEPAGE="http://github.com/bobertlo/oport"
+DOWNLOAD="http://dankness.org/oport/oport-20120509.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS="bootstrap-gcc bootstrap-musl bootstrap-binutils"

@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+PRGNAME=bootstrap-oport
+VERSION=${VERSION:-20120509}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+BS=${BS:-/tmp/bootstrap}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf oport-$VERSION
+tar xvf $DIST_DIR/oport-$VERSION.tar.bz2
+cd oport-$VERSION
+
+cat >> config.mk << EOF
+
+PREFIX=$BS
+BINDIR=\${PREFIX}/bin
+LIBDIR=\${PREFIX}/lib
+MANDIR=\${PREFIX}/share/man
+INCDIR=\${PREFIX}/include
+
+EOF
+
+make -j$MAKE_THREADS all
+make DESTDIR=$PKG install
+
+rm -rf "$PKG/$BS/share"
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*
