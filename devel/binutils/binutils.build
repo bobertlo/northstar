@@ -1,0 +1,47 @@
+#!/bin/sh -e
+
+PRGNAME="binutils"
+VERSION=${VERSION:-2.22}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf binutils-$VERSION
+tar xvf $DIST_DIR/binutils-$VERSION.tar.bz2
+cd binutils-$VERSION
+
+patch -p1 < $CWD/binutils-as-needed.patch
+
+CC="$BS/bin/musl-gcc" ./configure --prefix=/devel \
+    --disable-nls --disable-shared --disable-multilib \
+    --with-build-sysroot=/devel --with-sysroot=/devel
+    
+echo "#define __pid_t int" >include/features.h
+
+make -j$MAKE_THREADS
+make DESTDIR=$PKG install
+
+rm -f $PKG/devel/lib/libbfd.la
+rm -f $PKG/devel/lib/libopcodes.la
+
+if [ "$ARCH" = x86_64 ]; then
+  mv $PKG/devel/lib64/* $PKG/devel/lib
+  rmdir $PKG/devel/lib64
+fi
+
+cd $PKG
+tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" *

@@ -1,0 +1,37 @@
+#!/bin/sh -e
+
+PRGNAME=libz
+VERSION=${VERSION:-1.2.7}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf zlib-$VERSION
+tar xvf $DIST_DIR/zlib-$VERSION.tar.bz2
+cd zlib-$VERSION
+
+CFLAGS="-D_GNU_SOURCE" ./configure --prefix=/devel --static
+sed -i 's,mktemp -u,mktemp,g' Makefile
+
+make -j$MAKE_THREADS
+ranlib libz.a
+mkdir -p $PKG/devel/lib $PKG/devel/include
+cp libz.a $PKG/devel/lib
+cp zlib.h zconf.h $PKG/devel/include
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

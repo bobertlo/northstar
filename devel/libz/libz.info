@@ -1,0 +1,7 @@
+PRGNAME="libz"
+VERSION="1.2.7"
+BUILD=1
+HOMEPAGE="http://www.zlib.net/"
+DOWNLOAD="http://zlib.net/zlib-1.2.7.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS=""
