@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-PRGNAME=libgmp
-VERSION=${VERSION:-5.0.5}
+PRGNAME=libmpfr
+VERSION=${VERSION:-3.1.0}
 BUILD=${BUILD:-1}
 
 if [ -z "$ARCH" ]; then
@@ -20,14 +20,14 @@ OUTPUT=${OUTPUT:-$TMP}
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf gmp-$VERSION
-tar xvf $DIST_DIR/gmp-$VERSION.tar.bz2
-cd gmp-$VERSION
+rm -rf mpfr-$VERSION
+tar xvf $DIST_DIR/mpfr-$VERSION.tar.bz2
+cd mpfr-$VERSION
 
 ./configure --prefix=/devel --disable-shared
 make -j$MAKE_THREADS
 make DESTDIR=$PKG install
-rm $PKG/devel/lib/libgmp.la
+rm $PKG/devel/lib/libmpfr.la
 
 cd $PKG
 tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
