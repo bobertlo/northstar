@@ -24,7 +24,7 @@ rm -rf musl-$VERSION
 tar xvf $DIST_DIR/musl-$VERSION.tar.gz
 cd musl-$VERSION
 
-./configure --prefix=/tmp/bootstrap --syslibdir=/tmp/bootstrap/lib \
+./configure --prefix=$BS --syslibdir=$BS/lib \
     --disable-shared 
 
 make -j$MAKE_THREADS
