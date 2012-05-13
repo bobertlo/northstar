@@ -1,0 +1,33 @@
+#!/bin/sh -e
+
+PRGNAME=libmpc
+VERSION=${VERSION:-0.9}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+DIST_DIR=${DIST_DIR:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+OUTPUT=${OUTPUT:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf mpc-$VERSION
+tar xvf $DIST_DIR/mpc-$VERSION.tar.gz
+cd mpc-$VERSION
+
+./configure --prefix=/devel --disable-shared
+make -j$MAKE_THREADS
+make DESTDIR=$PKG install
+rm $PKG/devel/lib/libmpc.la
+
+cd $PKG
+tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
