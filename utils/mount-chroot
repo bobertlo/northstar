@@ -13,9 +13,10 @@ if [ "$uid" != "0" ]; then
 fi
 
 cd "$NS_ROOT"
-mkdir -p dev proc "./$BS"
+mkdir -p dev proc "./$BS" tmp/northstar/dist
 
 mount --rbind /dev "$NS_ROOT/dev"
 mount --rbind /proc "$NS_ROOT/proc"
 mount --bind "$BS" "$NS_ROOT/$BS"
+mount --bind "$NS_DIST" "$NS_ROOT/tmp/northstar/dist"
 mount -o remount,ro "$NS_ROOT/$BS"

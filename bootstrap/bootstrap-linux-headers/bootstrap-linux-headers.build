@@ -12,16 +12,16 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-DIST_DIR=${DIST_DIR:-$CWD}
+NS_DIST=${NS_DIST:-$CWD}
 TMP=${TMP:-/tmp}
 PKG=$TMP/package-$PRGNAME
-OUTPUT=${OUTPUT:-$TMP}
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
+mkdir -p $TMP $PKG $NS_PKGDIR
 cd $TMP
 rm -rf linux-$VERSION
-tar xvf $DIST_DIR/linux-$VERSION.tar.bz2
+tar xvf $NS_DIST/linux-$VERSION.tar.bz2
 cd linux-$VERSION
 
 patch -p1 < $CWD/linux-noperl-headers.patch
@@ -31,4 +31,4 @@ make mrproper
 make INSTALL_HDR_PATH=$PKG/$BS ARCH=$ARCH HOSTCFLAGS=-D_GNU_SOURCE headers_install
 
 cd $PKG
-tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

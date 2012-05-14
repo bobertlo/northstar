@@ -2,14 +2,14 @@
 
 . $1
 cd $( dirname $1 )
-DIST_DIR=${DIST_DIR:-$( pwd )}
+NS_DIST=${NS_DIST:-$( pwd )}
 
 for d in $DOWNLOAD; do
   fname=$( basename "$d" )
-  if [ -e "$DIST_DIR/$fname" ]; then
+  if [ -e "$NS_DIST/$fname" ]; then
     echo "found $fname"
   else
-    mkdir -p "$DIST_DIR"
-    wget -O "$DIST_DIR/$fname" $d
+    mkdir -p "$NS_DIST"
+    wget -O "$NS_DIST/$fname" $d
   fi
 done

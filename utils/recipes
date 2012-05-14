@@ -1,10 +1,8 @@
 #!/bin/sh -e
 
-TMP=${TMP:-/tmp}
-OUTPUT=${OUTPUT:-$TMP}
-
 for set in bootstrap devel; do
   for dir in $set/*; do
+    test -d $dir || continue
     pkg=$( basename $dir )
     . $dir/$pkg.info
     fullname=$PRGNAME-$VERSION-$ARCH-$BUILD
@@ -12,19 +10,19 @@ for set in bootstrap devel; do
     echo "#### $pkg"
     echo $set:V: $pkg
     echo install-$set:V: install-$pkg
-    echo $pkg:V: $OUTPUT/$fullname.tbz
-    echo $OUTPUT/$fullname.tbz:
+    echo $pkg:V: $NS_PKGDIR/$fullname.tbz
+    echo $NS_PKGDIR/$fullname.tbz:
     echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
     echo rebuild-$pkg:V:
     echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
-    echo install-$pkg:V: $PKGLOGDIR/$fullname
-    echo $PKGLOGDIR/$fullname: $OUTPUT/$fullname.tbz
-    echo "  mkdir -p $PKGLOGDIR $OUTPUT"
-    echo "  tar xvf $OUTPUT/$fullname.tbz -C / > $PKGLOGDIR/$fullname"
+    echo install-$pkg:V: $NS_PKGLOG/$fullname
+    echo $NS_PKGLOG/$fullname: $NS_PKGDIR/$fullname.tbz
+    echo "  mkdir -p $NS_PKGLOG $NS_PKGDIR"
+    echo "  tar xvf $NS_PKGDIR/$fullname.tbz -C / > $NS_PKGLOG/$fullname"
     if [ ! -z "$MAKEDEPENDS" ]; then
-      echo -n $OUTPUT/$fullname.tbz:
+      echo -n $NS_PKGDIR/$fullname.tbz:
       for dep in $MAKEDEPENDS; do
          echo -n " install-$dep"
       done

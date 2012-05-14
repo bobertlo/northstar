@@ -12,16 +12,16 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-DIST_DIR=${DIST_DIR:-$CWD}
-TMP=${TMP:-/tmp}
-PKG=$TMP/package-$PRGNAME
-OUTPUT=${OUTPUT:-$TMP}
+NS_DIST=${NS_DIST:-$CWD}
+NS_BUILD=${NS_BUILD:-/tmp}
+PKG=$NS_BUILD/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$NS_BUILD}
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
-cd $TMP
+mkdir -p $NS_BUILD $PKG $NS_PKGDIR
+cd $NS_BUILD
 rm -rf mpfr-$VERSION
-tar xvf $DIST_DIR/mpfr-$VERSION.tar.bz2
+tar xvf $NS_DIST/mpfr-$VERSION.tar.bz2
 cd mpfr-$VERSION
 
 ./configure --prefix=/devel --disable-shared
@@ -30,4 +30,4 @@ make DESTDIR=$PKG install
 rm $PKG/devel/lib/libmpfr.la
 
 cd $PKG
-tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

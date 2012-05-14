@@ -12,17 +12,17 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-DIST_DIR=${DIST_DIR:-$CWD}
+NS_DIST=${NS_DIST:-$CWD}
 TMP=${TMP:-/tmp}
 PKG=$TMP/package-$PRGNAME
-OUTPUT=${OUTPUT:-$TMP}
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
 BS=${BS:-/tmp/bootstrap}
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
+mkdir -p $TMP $PKG $NS_PKGDIR
 cd $TMP
 rm -rf oport-$VERSION
-tar xvf $DIST_DIR/oport-$VERSION.tar.bz2
+tar xvf $NS_DIST/oport-$VERSION.tar.bz2
 cd oport-$VERSION
 
 cat >> config.mk << EOF
@@ -41,4 +41,4 @@ make DESTDIR=$PKG install
 rm -rf "$PKG/$BS/share"
 
 cd $PKG
-tar jvcf $OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz ./$BS/*

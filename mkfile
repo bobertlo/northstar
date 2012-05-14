@@ -2,7 +2,7 @@
 
 help:QV:
   echo "northstar linux targets:"
-  echo "  bootstrap     build a bootstrap toolchain in $BS"
+  echo "  install-bootstrap    install bootstrap toolchain in $BS"
 
-PATH=utils:$PATH
-<|utils/recipes
+<|recipes
+

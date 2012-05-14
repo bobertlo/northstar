@@ -13,17 +13,17 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-DIST_DIR=${DIST_DIR:-$CWD}
+NS_DIST=${NS_DIST:-$CWD}
 TMP=${TMP:-/tmp}
 PKG=$TMP/package-$PRGNAME
-OUTPUT=${OUTPUT:-/tmp}
+NS_PKGDIR=${NS_PKGDIR:-/tmp}
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
+mkdir -p $TMP $PKG $NS_PKGDIR
 cd $TMP
 rm -rf gcc-$VERSION
 
-tar xvf $DIST_DIR/gcc-core-$VERSION.tar.bz2
+tar xvf $NS_DIST/gcc-core-$VERSION.tar.bz2
 cd gcc-$VERSION
 
 sed -i 's@\./fixinc.sh@-c true@' gcc/Makefile.in
@@ -37,4 +37,4 @@ make DESTDIR=$PKG install-gcc
 rm -r $PKG/$BS/info $PKG/$BS/man
 
 cd $PKG
-tar jvcf "$OUTPUT/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*
+tar jvcf "$NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*

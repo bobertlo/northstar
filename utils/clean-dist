@@ -3,8 +3,8 @@
 . $1
 cd $( dirname $1 )
 
-DIST_DIR=${DIST_DIR:-$( pwd )}
+NS_DIST=${NS_DIST:-$( pwd )}
 
 for d in $DOWNLOAD; do
-  rm -f "$DIST_DIR/$( basename "$d" )"
+  rm -f "$NS_DIST/$( basename "$d" )"
 done
