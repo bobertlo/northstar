@@ -28,7 +28,7 @@ patch -p1 < $CWD/linux-noperl-headers.patch
 patch -p1 < $CWD/linux-ubi.patch
 
 make mrproper
-make INSTALL_HDR_PATH=$PKG/devel ARCH=$ARCH HOSTCFLAGS=-D_GNU_SOURCE headers_install
+make INSTALL_HDR_PATH=$PKG/$DEVEL_PREFIX ARCH=$ARCH HOSTCFLAGS=-D_GNU_SOURCE headers_install
 
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

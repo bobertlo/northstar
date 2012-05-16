@@ -24,10 +24,10 @@ rm -rf gmp-$VERSION
 tar xvf $NS_DIST/gmp-$VERSION.tar.bz2
 cd gmp-$VERSION
 
-./configure --prefix=/devel --disable-shared
+./configure --prefix=$DEVEL_PREFIX --disable-shared
 make -j$MAKE_THREADS
 make DESTDIR=$PKG install
-rm $PKG/devel/lib/libgmp.la
+rm $PKG/$DEVEL_PREFIX/lib/libgmp.la
 
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

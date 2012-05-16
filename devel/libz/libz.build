@@ -24,14 +24,14 @@ rm -rf zlib-$VERSION
 tar xvf $NS_DIST/zlib-$VERSION.tar.bz2
 cd zlib-$VERSION
 
-CFLAGS="-D_GNU_SOURCE" ./configure --prefix=/devel --static
+CFLAGS="-D_GNU_SOURCE" ./configure --prefix=$DEVEL_PREFIX --static
 sed -i 's,mktemp -u,mktemp,g' Makefile
 
 make -j$MAKE_THREADS
 ranlib libz.a
-mkdir -p $PKG/devel/lib $PKG/devel/include
-cp libz.a $PKG/devel/lib
-cp zlib.h zconf.h $PKG/devel/include
+mkdir -p $PKG/$DEVEL_PREFIX/lib $PKG/$DEVEL_PREFIX/include
+cp libz.a $PKG/$DEVEL_PREFIX/lib
+cp zlib.h zconf.h $PKG/$DEVEL_PREFIX/include
 
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

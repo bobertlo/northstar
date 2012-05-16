@@ -28,14 +28,14 @@ cd binutils-$VERSION
 
 echo "#define __pid_t int" >include/features.h
 
-./configure --prefix=/devel --disable-nls --disable-shared \
-    --libdir=/devel/lib --libexecdir=/devel/lib --disable-multilib
+./configure --prefix=$DEVEL_PREFIX --disable-nls --disable-shared \
+    --libdir=$DEVEL_PREFIX/lib --libexecdir=$DEVEL_PREFIX/lib --disable-multilib
     
 make -j$MAKE_THREADS all-binutils all-ld all-gas
 make DESTDIR=$PKG install-binutils install-ld install-gas
 
-rm -f $PKG/devel/lib/libbfd.la
-rm -f $PKG/devel/lib/libopcodes.la
+rm -f $PKG/$DEVEL_PREFIX/lib/libbfd.la
+rm -f $PKG/$DEVEL_PREFIX/lib/libopcodes.la
 
 cd $PKG
 tar jvcf "$NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" *

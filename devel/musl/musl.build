@@ -24,7 +24,7 @@ rm -rf $PRGNAME-$VERSION
 tar xvf $NS_DIST/$PRGNAME-$VERSION.tar.gz
 cd $PRGNAME-$VERSION
 
-./configure --prefix=/devel --syslibdir=/devel/lib \
+./configure --prefix=$DEVEL_PREFIX --syslibdir=$DEVEL_PREFIX/lib \
     --disable-shared 
 
 make -j$MAKE_THREADS

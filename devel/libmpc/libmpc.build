@@ -24,10 +24,10 @@ rm -rf mpc-$VERSION
 tar xvf $NS_DIST/mpc-$VERSION.tar.gz
 cd mpc-$VERSION
 
-./configure --prefix=/devel --disable-shared
+./configure --prefix=$DEVEL_PREFIX --disable-shared
 make -j$MAKE_THREADS
 make DESTDIR=$PKG install
-rm $PKG/devel/lib/libmpc.la
+rm $PKG/$DEVEL_PREFIX/lib/libmpc.la
 
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

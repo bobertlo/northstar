@@ -30,8 +30,8 @@ sed -i '/   *attribute_mode/s@attr@#&@' gcc/config/i386/i386-builtin-types.awk
 sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 #sed -i 's/linux-gnu\* |/linux-gnu* | linux-musl* |/' config.sub
 
-CFLAGS="-D_GNU_SOURCE -I/devel/include -L/devel/lib" ./configure \
-    --prefix=/devel --libexecdir=/devel/lib --with-newlib --with-headers=no\
+CFLAGS="-D_GNU_SOURCE -I/$DEVEL_PREFIX/include -L/$DEVEL_PREFIX/lib" ./configure \
+    --prefix=$DEVEL_PREFIX --libexecdir=$DEVEL_PREFIX/lib --with-newlib --with-headers=no\
     --disable-bootstrap --disable-shared  --disable-nls --disable-multilib\
     --disable-mudflap --disable-libmudflap --disable-libssp \
     --disable-libgomp --with-system-zlib --with-target-zlib=no \
