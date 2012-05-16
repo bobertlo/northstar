@@ -9,29 +9,34 @@ bootstrap toolchain and then a chroot environment.
 
 === BUILDING A BOOTSTRAP ENVIRONMENT ===
 
+    When not already running northstar or another musl environment:
+ 1) build a bootstrap toolchain 
+ 2) build and enter bootstrap chroot
+    Once running northstar or inside a bootstrap chroot:
+ 3) build and install desired packages
+
+--- Bootstrap instructions: ---
+
 The bootstrap toolchain is built statically and installed to the prefix $BS
 (default: /tmp/bootstrap) which is then mounted read-only at the same point 
 inside the chroot.
 
---- Bootstrap instructions: -----
 $ cp dist/bootstrap.config config
 $ vi config
 $ . config
 $ mk install-bootstrap
----------------------------------
 
 At this point there should be toolchain capable of building northstar proper 
 inside a chroot. The next step is to prepare the chroot environment and enter 
 it.
 
---- Entering the chroot: --------
+--- Entering the chroot: ---
 $ utils/prepare-chroot
 $ utils/mount-chroot
  ... (probably copy in a source tree or something?)
 $ utils/enter-chroot
  ... (then when you're done)
 $ utils/umount-chroot
----------------------------------
 
 [1] http://github.com/chneukirchen/sabotage
     http://github.com/rofl0r/sabotage
