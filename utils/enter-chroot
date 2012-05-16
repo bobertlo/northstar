@@ -7,5 +7,5 @@ if [ "$uid" != "0" ]; then
   exit $?
 fi
 
-chroot "$NS_ROOT" $BS/bin/env -i PATH=/local/bin:/bin:/devel/bin:$BS/bin\
+chroot "$NS_ROOT" $BS/bin/env -i PATH=/local/bin:/bin:$DEVEL_PREFIX/bin:$BS/bin\
     HOME=/root TERM="$TERM" PS1='\u:\w$ ' $BS/bin/sh --login
