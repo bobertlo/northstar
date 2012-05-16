@@ -4,4 +4,4 @@ BUILD=1
 HOMEPAGE="http://gmplib.org/"
 DOWNLOAD="ftp://ftp.gmplib.org/pub/gmp-5.0.5/gmp-5.0.5.tar.bz2"
 DEPENDS=""
-MAKEDEPENDS="musl"
+MAKEDEPENDS="musl binutils"

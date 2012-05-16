@@ -1,0 +1,7 @@
+PRGNAME="gcc"
+VERSION="4.5.3"
+BUILD=1
+HOMEPAGE="http://gcc.gnu.org/"
+DOWNLOAD="http://ftpmirror.gnu.org/gcc/gcc-4.5.3/gcc-core-4.5.3.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS="musl libgmp libmpfr libmpc libz binutils"
