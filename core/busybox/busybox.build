@@ -32,10 +32,9 @@ make -j$MAKE_THREADS
 
 mkdir -p $PKG/bin
 cp busybox $PKG/bin
-cd $PKG/bin
-for f in $( ./busybox --list ); do
-  [ -e $f ] || ln -sf busybox $f
-done
+
+mkdir -p $PKG/install
+cp $CWD/busybox.install $PKG/install/doinst.sh
 
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

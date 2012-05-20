@@ -34,7 +34,7 @@ for package in $*; do
   tar xf "$package" -C "$ROOT"
   mv "$TMP/tmplist" "$PKGLOG/$fullname"
   
-  if [ -x "$ROOT/install/doinst.sh" ]; then
+  if [ -f "$ROOT/install/doinst.sh" ]; then
     echo "running $fullname install script"
     ( cd $ROOT; sh install/doinst.sh )
   fi
