@@ -14,13 +14,12 @@ for set in bootstrap core devel; do
     echo $NS_PKGDIR/$fullname.tbz:
     echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
-    echo rebuild-$pkg:V:
+    echo rebuild-$pkg:QV:
     echo "  fetch-dist $dir/$pkg.info"
     echo "  build-pkg $dir/$pkg.build"
-    echo install-$pkg:V: $NS_PKGLOG/$fullname
-    echo $NS_PKGLOG/$fullname: $NS_PKGDIR/$fullname.tbz
-    echo "  mkdir -p $NS_PKGLOG $NS_PKGDIR"
-    echo "  tar xvf $NS_PKGDIR/$fullname.tbz -C / > $NS_PKGLOG/$fullname"
+    echo install-$pkg:QV: $NS_PKGDIR/$fullname.tbz
+    echo "  install-pkg -pkglog $NS_PKGLOG $NS_PKGDIR/$fullname.tbz"
+    echo $NS_PKGLOG/$fullname: install-$pkg
     if [ ! -z "$MAKEDEPENDS" ]; then
       echo -n $NS_PKGDIR/$fullname.tbz:
       for dep in $MAKEDEPENDS; do

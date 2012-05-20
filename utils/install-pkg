@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+[ "$TMP" ] || TMP="/tmp"
+PKGLOG=/var/log/packages
+ROOT=/
+
+while [ 0 ]; do
+  if [ "$1" = "-root" ]; then
+    ROOT="$2"
+    shift 2
+  elif [ "$1" = "-pkglog" ]; then
+    PKGLOG="$2"
+    shift 2
+  else
+    break
+  fi
+done
+
+mkdir -p "$PKGLOG"
+
+for package in $*; do
+  pkgext="$(echo $package | rev | cut -f 1 -d . | rev)"
+  fullname="$(basename "$package" ".$pkgext")"
+  if [ ! -e "$package" ]; then
+    echo "$package: file not found"
+    exit 1 
+  elif [ -e "$ROOT/$PKGLOG/$fullname" ]; then
+    echo "$fullname: already installed, skipping"
+    continue
+  fi
+  
+  tar tf "$package" > "$TMP/tmplist"
+  echo "extracting $package"
+  tar xf "$package" -C "$ROOT"
+  mv "$TMP/tmplist" "$PKGLOG/$fullname"
+  
+  if [ -x "$ROOT/install/doinst.sh" ]; then
+    echo "running $fullname install script"
+    ( cd $ROOT; sh install/doinst.sh )
+  fi
+  if [ -e "$ROOT/install" ]; then
+    rm -rf "$ROOT/install"
+  fi
+done
