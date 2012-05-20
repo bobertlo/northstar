@@ -1,43 +1,57 @@
+
 Northstar linux is an experimental linux distribution based on sabotage[1]
 linux. Northstar builds its entire userspace statically using the musl[2] C 
 standard library.
 
-=== BUILDING NORTHSTAR LINUX ===
+
+=== BOOTSTRAP INSTRUCTIONS:
 
 To build northstar linux on a foreign linux system, you must first create a
 bootstrap toolchain and then a chroot environment. 
 
-=== BUILDING A BOOTSTRAP ENVIRONMENT ===
-
-    When not already running northstar or another musl environment:
- 1) build a bootstrap toolchain 
- 2) build and enter bootstrap chroot
-    Once running northstar or inside a bootstrap chroot:
- 3) build and install desired packages
-
---- Bootstrap instructions: ---
+--- Building a bootstrap toolchain:
 
 The bootstrap toolchain is built statically and installed to the prefix $BS
 (default: /tmp/bootstrap) which is then mounted read-only at the same point 
 inside the chroot.
 
-$ cp dist/bootstrap.config config
-$ vi config
-$ . config
-$ mk install-bootstrap
+  cp dist/bootstrap.config config
+  # set ARCH and MAKE_THREADS
+  vi config
+  . config
+  mk install-bootstrap
+
+--- Preparing and entering the chroot:
 
 At this point there should be toolchain capable of building northstar proper 
-inside a chroot. The next step is to prepare the chroot environment and enter 
-it.
+inside a chroot. The next step is to prepare the chroot environment, copy the
+northstar source tree inside the chroot, and enter the chroot.
 
---- Entering the chroot: ---
-$ utils/prepare-chroot
-$ utils/mount-chroot
- ... (probably copy in a source tree or something?)
-$ utils/enter-chroot
- ... (then when you're done)
-$ utils/umount-chroot
+  . config
+  utils/prepare-chroot
+  utils/mount-chroot
+  utils/enter-chroot
+  # ...
+  utils/umount-chroot
+  
+NOTE: remember to unmount the bind mounts inside the chroot before modifying
+  the contents of $NS_ROOT (eg: deleting them) or you could  delete  /dev/*,
+  causing varying amounts of damage to your host system.
 
+=== BUILD INSTRUCTIONS:
+
+Once you are running in a bootstrap environment, you can use mk to build 
+northstar packages, building and installing any build dependencies as needed.
+
+  cd /src/northstar
+  cp dist/stage1.config config
+  # set ARCH and MAKE_THREADS
+  vi config
+  . config
+  mk install-devel
+  mk install-core
+
+=== LINKS ===
 [1] http://github.com/chneukirchen/sabotage
     http://github.com/rofl0r/sabotage
 [2] http://www.etalabs.net/musl
