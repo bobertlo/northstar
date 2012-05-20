@@ -1,0 +1,7 @@
+PRGNAME="busybox"
+VERSION="1.19.2"
+BUILD=1
+HOMEPAGE="http://www.busybox.net/"
+DOWNLOAD="http://www.busybox.net/downloads/busybox-1.19.2.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS="gcc musl linux-headers"

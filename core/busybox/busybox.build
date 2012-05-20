@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+PRGNAME=busybox
+VERSION=${VERSION:-1.19.2}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $NS_PKGDIR
+cd $TMP
+rm -rf busybox-$VERSION
+tar xvf $NS_DIST/busybox-$VERSION.tar.bz2
+cd busybox-$VERSION
+
+cp $CWD/busybox.config .config
+patch -p1 < $CWD/busybox.patch
+patch -p1 < $CWD/busybox-patch.patch
+
+make -j$MAKE_THREADS
+
+mkdir -p $PKG/bin
+cp busybox $PKG/bin
+cd $PKG/bin
+for f in $( ./busybox --list ); do
+  [ -e $f ] || ln -sf busybox $f
+done
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

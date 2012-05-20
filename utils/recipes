@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-for set in bootstrap devel; do
+for set in bootstrap core devel; do
   for dir in $set/*; do
     test -d $dir || continue
     pkg=$( basename $dir )
