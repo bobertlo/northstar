@@ -26,9 +26,10 @@ cd gcc-$VERSION
 
 patch -p1 < $CWD/gcc-config-libs.diff
 
+# fix empty function calls so gawk isn't needed
 sed -i '/   *attribute_mode/s@attr@#&@' gcc/config/i386/i386-builtin-types.awk
+
 sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
-#sed -i 's/linux-gnu\* |/linux-gnu* | linux-musl* |/' config.sub
 
 CFLAGS="-D_GNU_SOURCE -I/$DEVEL_PREFIX/include -L/$DEVEL_PREFIX/lib" ./configure \
     --prefix=$DEVEL_PREFIX --libexecdir=$DEVEL_PREFIX/lib --with-newlib --with-headers=no\

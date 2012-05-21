@@ -19,7 +19,7 @@ help:QV:
   echo "  install-<name>        build and install pkg or set <name> and dependencies"
   echo
   echo native package sets:
-  echo "  core devel"
+  echo "  core devel dynamic"
 
 <|recipes
 

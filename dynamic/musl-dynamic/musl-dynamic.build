@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+PRGNAME=musl-dynamic
+VERSION=${VERSION:-0.9.0}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+NS_BUILD=${NS_BUILD:-/tmp}
+PKG=$NS_BUILD/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$NS_BUILD}
+
+rm -rf $PKG
+mkdir -p $NS_BUILD $PKG $NS_PKGDIR
+cd $NS_BUILD
+rm -rf musl-$VERSION
+tar xvf $NS_DIST/musl-$VERSION.tar.gz
+cd musl-$VERSION
+
+./configure --disable-static \
+    --prefix=$DYNAMIC_PREFIX \
+    --syslibdir=$DYNAMIC_PREFIX/lib \
+    --enable-gcc-wrapper
+
+sed -i -e 's/-lgcc//g' Makefile
+
+make -j$MAKE_THREADS
+make DESTDIR=$PKG install
+#mkdir -p $PKG/$DYNAMIC_PREFIX/lib
+#cp lib/libc.so $PKG/$DYNAMIC_PREFIX/lib/
+#ln -sf libc.so $PKG/$DYNAMIC_PREFIX/lib/ld-musl-$ARCH.so.1
+mv $PKG/$DYNAMIC_PREFIX/bin/musl-gcc $PKG/$DYNAMIC_PREFIX/bin/dynamic-gcc
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
