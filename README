@@ -30,6 +30,8 @@ northstar source tree inside the chroot, and enter the chroot.
   . config
   utils/prepare-chroot
   utils/mount-chroot
+  # copy the source tree into $NS_ROOT
+  cp -r . $NS_ROOT/src/northstar
   utils/enter-chroot
   # ...
   utils/umount-chroot
