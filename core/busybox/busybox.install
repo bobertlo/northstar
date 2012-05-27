@@ -2,7 +2,7 @@
 
 cd bin
 for app in $( ./busybox --list ); do
-  if [ ! -e "$app" -o "$(basename $(readlink "$app"))" = "busybox" ]; then
+  if [ ! -e "$app" -o "$(basename "$(readlink "$app")")" = "busybox" ]; then
     ln -sf busybox "$app"
   fi
 done
