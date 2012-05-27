@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+PRGNAME=mk
+VERSION=${VERSION:-6}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?96) ARCH=i396 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+PKG=$NS_BUILD/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $NS_PKGDIR
+cd $NS_BUILD
+rm -rf 9base-$VERSION
+tar xvf $NS_DIST/9base-$VERSION.tar.gz
+cd 9base-$VERSION
+
+sed -i '/sys.termios.h/d' lib9/readcons.c
+sed -i 's/__linux__/__not_linux__/;s/__sun__/__linux__/' lib9/dirread.c
+
+echo "PREFIX = $DEVEL_PREFIX" >> config.mk
+echo "CFLAGS += -D_GNU_SOURCE -DPLAN9PORT" >> config.mk
+echo "CC = musl-gcc" >> config.mk
+
+make -j$MAKE_THREADS -C lib9 
+make -j$MAKE_THREADS -C mk
+make DESTDIR=$PKG -C mk install
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
