@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+PRGNAME=make
+VERSION=${VERSION:-3.82}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+TMP=${TMP:-/tmp}
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
+PKG=$NS_PKGDIR/package-$PRGNAME
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $NS_PKGDIR
+cd $TMP
+rm -rf make-$VERSION
+tar xvf $NS_DIST/make-$VERSION.tar.bz2
+cd make-$VERSION
+
+./configure --prefix="$DEVEL_PREFIX" --disable-nls
+make -j$MAKE_THREADS CFLAGS=-D__BEOS__
+make DESTDIR=$PKG install
+
+rm -rf "$PKG/$BS/share"
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
