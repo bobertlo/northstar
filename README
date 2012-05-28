@@ -1,8 +1,9 @@
 
 Northstar linux is an experimental linux distribution based on sabotage[1]
-linux. Northstar builds its entire userspace statically using the musl[2] C 
-standard library.
-
+linux. Northstar builds its core userspace statically using the musl[2] C 
+standard library. Dynamic linking support is under development, but is very
+experimental at this point and only targeting bloated software and a small
+set of extreneous languages that require dynamic objects.
 
 === BOOTSTRAP INSTRUCTIONS:
 
