@@ -1,0 +1,27 @@
+#!/bin/sh -e
+
+PRGNAME=basefs
+VERSION=${VERSION:-0.1}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+TMP=${TMP:-/tmp}
+PKG=$TMP/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
+
+rm -rf $PKG
+mkdir -p $PKG
+
+mkdir -p "$PKG/install"
+cp basefs.install "$PKG/install/doinst.sh"
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *

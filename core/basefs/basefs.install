@@ -1,0 +1,9 @@
+mkdir -p bin dev etc local proc sys share tmp var
+chmod a+rwx tmp
+
+mkdir -p var/log/packages
+mkdir -p share/man
+mkdir -p root
+chmod go-rwx root
+
+mkdir -p local/home
