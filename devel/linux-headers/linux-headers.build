@@ -31,4 +31,5 @@ make mrproper
 make INSTALL_HDR_PATH=$PKG/$DEVEL_PREFIX ARCH=$ARCH HOSTCFLAGS=-D_GNU_SOURCE headers_install
 
 cd $PKG
+sed -i 's,umode_t,__u16,' ./$DEVEL_PREFIX/include/linux/ext2_fs.h
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
