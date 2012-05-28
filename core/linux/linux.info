@@ -1,0 +1,7 @@
+PRGNAME="linux"
+VERSION="3.3.4"
+BUILD=1
+HOMEPAGE="http://www.kernel.org/"
+DOWNLOAD="http://www.kernel.org/pub/linux/kernel/v3.0/linux-3.3.4.tar.bz2"
+DEPENDS=""
+MAKEDEPENDS="gcc binutils"
