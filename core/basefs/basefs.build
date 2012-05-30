@@ -23,5 +23,6 @@ mkdir -p $PKG
 mkdir -p "$PKG/install"
 cp basefs.install "$PKG/install/doinst.sh"
 
+mkdir -p "$NS_PKGDIR"
 cd $PKG
 tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
