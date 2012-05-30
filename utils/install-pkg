@@ -29,9 +29,9 @@ for package in $*; do
     continue
   fi
   
-  tar tf "$package" > "$TMP/tmplist"
   echo "extracting $package"
-  tar xf "$package" -C "$ROOT"
+  tar jtf "$package" > "$TMP/tmplist"
+  tar jxf "$package" -C "$ROOT"
   mv "$TMP/tmplist" "$PKGLOG/$fullname"
   
   if [ -f "$ROOT/install/doinst.sh" ]; then
