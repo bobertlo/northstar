@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo shutting down
+
+echo sending TERM signal
+killall5 -15
+sleep 5
+echo sending KILL signal
+killall5 -9
+
+swapoff -a
+
+echo remounting root read-only
+mount -o remount,ro /
+
+sync
+sleep 1
+echo goodbye
