@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+PRGNAME=oport
+VERSION=${VERSION:-20120509}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?96) ARCH=i396 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+PKG=$NS_BUILD/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$TMP}
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $NS_PKGDIR
+cd $NS_BUILD
+rm -rf oport-$VERSION
+tar xvf $NS_DIST/oport-$VERSION.tar.bz2
+cd oport-$VERSION
+
+cat >> config.mk << EOF
+
+CC=$CC
+PREFIX=$BS
+BINDIR=\${PREFIX}/bin
+LIBDIR=\${PREFIX}/lib
+MANDIR=\${PREFIX}/share/man
+INCDIR=\${PREFIX}/include
+
+EOF
+
+make -j$MAKE_THREADS
+make DESTDIR=$PKG install
+
+cd $PKG
+tar jvcf $NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz *
