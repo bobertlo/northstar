@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 [ "$TMP" ] || TMP="/tmp"
-PKGLOG=/var/log/packages
+PKGLOG=var/log/packages
 ROOT=/
 
 while [ 0 ]; do
@@ -32,7 +32,7 @@ for package in $*; do
   echo "extracting $package"
   tar jtf "$package" > "$TMP/tmplist"
   tar jxf "$package" -C "$ROOT"
-  mv "$TMP/tmplist" "$PKGLOG/$fullname"
+  mv "$TMP/tmplist" "$ROOT/$PKGLOG/$fullname"
   
   if [ -f "$ROOT/install/doinst.sh" ]; then
     echo "running $fullname install script"
