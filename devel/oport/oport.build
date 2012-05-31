@@ -26,7 +26,7 @@ cd oport-$VERSION
 cat >> config.mk << EOF
 
 CC=$CC
-PREFIX=$BS
+PREFIX=$DEVEL_PREFIX
 BINDIR=\${PREFIX}/bin
 LIBDIR=\${PREFIX}/lib
 MANDIR=\${PREFIX}/share/man
