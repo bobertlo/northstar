@@ -14,8 +14,8 @@ fi
 CWD=$(pwd)
 NS_DIST=${NS_DIST:-$CWD}
 TMP=${TMP:-/tmp}
-PKG=$TMP/package-$PRGNAME
 NS_PKGDIR=${NS_PKGDIR:-$TMP}
+PKG=$NS_PKGDIR/package-$PRGNAME
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $NS_PKGDIR
