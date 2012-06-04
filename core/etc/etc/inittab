@@ -4,3 +4,4 @@ tty2::respawn:/bin/getty -L 38400 tty2 linux
 tty3::respawn:/bin/getty -L 38400 tty3 linux
 tty4::respawn:/bin/getty -L 38400 tty4 linux
 ::shutdown:/etc/rc.shutdown
+::reboot:/etc/rc.shutdown
