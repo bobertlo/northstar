@@ -6,5 +6,4 @@ tty4::respawn:/bin/getty -L 38400 tty4 linux
 tty5::respawn:/bin/getty -L 38400 tty5 linux
 tty6::respawn:/bin/getty -L 38400 tty6 linux
 ::shutdown:/etc/rc.shutdown
-::reboot:/etc/rc.shutdown
 ::ctrlaltdel:/bin/reboot
