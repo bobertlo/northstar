@@ -16,7 +16,7 @@ while [ 0 ]; do
   fi
 done
 
-mkdir -p "$PKGLOG"
+mkdir -p "$ROOT/$PKGLOG"
 
 for package in $*; do
   pkgext="$(echo $package | rev | cut -f 1 -d . | rev)"
