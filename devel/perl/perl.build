@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+PRGNAME="perl"
+VERSION=${VERSION:-5.14.1}
+BUILD=${BUILD:-1}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i386 ;;
+       *) ARCH=$( uname -m) ;;
+  esac
+fi
+
+CWD=$(pwd)
+NS_DIST=${NS_DIST:-$CWD}
+NS_BUILD=${NS_BUILD:-/tmp}
+PKG=$NS_BUILD/package-$PRGNAME
+NS_PKGDIR=${NS_PKGDIR:-$NS_BUILD}
+
+rm -rf $PKG
+mkdir -p $NS_BUILD $PKG $NS_PKGDIR
+cd $NS_BUILD
+rm -rf $PRGNAME-$VERSION
+tar xvf $NS_DIST/$PRGNAME-$VERSION.tar.gz
+cd $PRGNAME-$VERSION
+
+sed -i -e 's,-fstack-protector,-fnostack-protector,g' ./Configure
+
+sed -i -e "s,/usr/include/errno.h,$DEVEL_PREFIX/include/errno.h,g" ext/Errno/Errno_pm.PL
+
+# FIXME: perl can't find the libc, this is a nasty hack
+./Configure -des -Uusedl -Dcc="$CC" -Accflags='-D_GNU_SOURCE -D_BSD_SOURCE' \
+  -Dprefix="$DEVEL_PREFIX" -Dinstallprefix="$PKG/$DEVEL_PREFIX" \
+  -Dlibc="$DEVEL_PREFIX/lib/libc.a"
+  
+# http://bugs.gentoo.org/show_bug.cgi?id=331113
+make -j1
+make install
+    
+cd $PKG
+tar jvcf "$NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" *

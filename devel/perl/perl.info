@@ -1,0 +1,7 @@
+PRGNAME="perl"
+VERSION="5.14.1"
+BUILD=1
+HOMEPAGE="http://www.perl.org/"
+DOWNLOAD="http://www.cpan.org/src/5.0/perl-5.14.1.tar.gz"
+DEPENDS=""
+MAKEDEPENDS="musl gcc libcurl"
