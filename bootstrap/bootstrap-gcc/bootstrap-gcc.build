@@ -35,6 +35,7 @@ CFLAGS="-D_GNU_SOURCE" ./configure --prefix="$BS" --disable-bootstrap \
 make LDFLAGS="-static" -j$MAKE_THREADS all-gcc
 make DESTDIR=$PKG install-gcc
 rm -r $PKG/$BS/info $PKG/$BS/man
+ln -s gcc $PKG/$BS/bin/cc
 
 cd $PKG
 tar jvcf "$NS_PKGDIR/$PRGNAME-$VERSION-$ARCH-$BUILD.tbz" ./$BS/*
