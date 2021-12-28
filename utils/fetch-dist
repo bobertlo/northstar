@@ -1,15 +1,19 @@
 #!/bin/sh -e
 
+
 . $1
-cd $( dirname $1 )
 NS_DIST=${NS_DIST:-$( pwd )}
+
+pkgpath=$( dirname $1 )
+pkg=$(basename $pkgpath )
+
 
 for d in $DOWNLOAD; do
   fname=$( basename "$d" )
-  if [ -e "$NS_DIST/$fname" ]; then
+  if [ -e "$NS_DIST/$pkg/$fname" ]; then
     echo "found $fname"
   else
-    mkdir -p "$NS_DIST"
-    wget -O "$NS_DIST/$fname" $d
+    mkdir -p "$NS_DIST/$pkg"
+    wget -O "$NS_DIST/$pkg/$fname" $d
   fi
 done

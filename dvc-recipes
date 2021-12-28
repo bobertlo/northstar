@@ -1,0 +1,65 @@
+#!/bin/sh -e
+
+echo "stages:"
+for set in bootstrap core devel dynamic extra; do
+  for dir in $set/*; do
+    test -d $dir || continue
+    pkg=$( basename $dir )
+
+    DOWNLOAD=""
+
+    . $dir/$pkg.info
+    fullname=$PRGNAME-$VERSION-$BUILD
+    
+    # generate recipe
+    
+    if [ ! -z "$DOWNLOAD" ]; then
+      echo "  fetch-$pkg:"
+      echo "    cmd: sh utils/fetch-dist $dir/$pkg.info"
+      echo "    outs:"
+      echo "     - $NS_DIST/$pkg/$(basename $DOWNLOAD)"
+
+    fi
+
+    # echo $set:V: $pkg
+    # echo install-$set:V: install-$pkg
+    # echo $pkg:V: $NS_PKGDIR/$fullname.tbz
+    # echo $NS_PKGDIR/$fullname.tbz:
+    # echo "  fetch-dist $dir/$pkg.info"
+    # echo "  build-pkg $dir/$pkg.build"
+    # echo rebuild-$pkg:QV:
+    # echo "  fetch-dist $dir/$pkg.info"
+    # echo "  build-pkg $dir/$pkg.build"
+    # echo install-$pkg:QV: $NS_PKGDIR/$fullname.tbz
+    # echo "  install-pkg -pkglog $NS_PKGLOG $NS_PKGDIR/$fullname.tbz"
+    # echo $NS_PKGLOG/$fullname: install-$pkg
+    # if [ ! -z "$MAKEDEPENDS" ]; then
+    #   echo -n $NS_PKGDIR/$fullname.tbz:
+    #   for dep in $MAKEDEPENDS; do
+    #      echo -n " install-$dep"
+    #   done
+    #   echo
+    # fi
+    
+    echo "  build-$pkg:"
+    echo "    cmd: sh utils/build-pkg $dir/$pkg.build"
+    
+    if [ -n "$DOWNLOADS" -a -n "$DEPENDS" ]; then
+      echo "    deps:"
+    fi
+    if [ -n "$DOWNLOADS" ]; then
+      echo "     - $NS_DIST/$pkg/$(basename $DOWNLOAD)"
+    fi
+    if [ ! -z "$DEPENDS" ]; then
+      # echo -n install-$pkg:V:
+      for dep in $DEPENDS; do
+         echo -n "     - install-$dep"
+      done
+      echo
+    fi
+    echo "    outs:"
+    echo "      - $NS_PKGDIR/$fullname.tbz"
+
+    # echo
+  done
+done

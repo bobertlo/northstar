@@ -21,7 +21,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $NS_PKGDIR
 cd $TMP
 rm -rf binutils-$VERSION
-tar xvf $NS_DIST/binutils-$VERSION.tar.bz2
+tar xvf $NS_DIST/bootstrap-binutils/binutils-$VERSION.tar.bz2
 cd binutils-$VERSION
 
 echo "#define __pid_t int" >include/features.h
